@@ -11,6 +11,10 @@ COMMAND_SHELL            = 0x152
 COMMAND_EXIT             = 0x155
 COMMAND_OUTPUT           = 0x200
 
+# Added for file upload/download functionalities
+COMMAND_UPLOAD           = 0x153
+COMMAND_DOWNLOAD         = 0x154
+
 # ====================
 # ===== Commands =====
 # ====================
