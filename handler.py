@@ -35,6 +35,51 @@ class CommandShell(Command):
         Task.add_data(arguments[ 'commands' ])
         return Task.buffer
 
+##############################################################
+# ~ Upload TO DO ~
+# =========================
+# ====  Command        ====
+# =========================
+class CommandUpload( Command ):
+    CommandId   = COMMAND_UPLOAD
+    Name        = "upload"
+    Description = "uploads a file to the target machine"
+    Help        = ""
+    NeedAdmin   = False
+    Mitr        = []
+    Params      = [
+        CommandParam(
+            name="local_path",
+            is_file_path=True,
+            is_optional=False
+        ),
+        CommandParam(
+            name="remote_path",
+            is_file_path=False,
+            is_optional=False
+        )
+    ]
+
+    def job_generate( self, arguments: dict ) -> bytes:
+
+        if not os.path.isfile( arguments[ 'local_path' ] ):
+            raise Exception( f"file {arguments[ 'local_path' ]} does not exist" )
+
+        with open( arguments[ 'local_path' ], 'rb' ) as f:
+            file_data = f.read()
+
+        Task = Packer()
+
+        Task.add_data( arguments[ 'remote_path' ] )
+        Task.add_data( file_data )
+
+        return Task.buffer
+
+# DOWNLOAD
+
+
+##############################################################
+
 class CommandExit( Command ):
     CommandId   = COMMAND_EXIT
     Name        = "exit"
